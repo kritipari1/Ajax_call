@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>AJAX Call</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <style>
+     .myDiv {
+      border: 1px solid #fff;
+      padding: 10px;
+      background: #bca;
+     }
+     </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="text/javascript">
+    
+          var root = 'https://jsonplaceholder.typicode.com';
+
+    
+       $(document).ready(function() {
+        $.ajax({
+          url: root + '/posts?userId=1',
+          method: 'GET'
+        }).then(function(data) {
+          var app=document.getElementById("app");
+          data.forEach(function(comment) 
+          {
+            var contentIndex = document.createElement("div");
+            contentIndex.id = "content-" + comment.id;
+            var innerDiv = document.createElement("div")
+            innerDiv.setAttribute("class", "myDiv");
+            var list = document.createElement("p");
+            var id= document.createElement("p");
+            var title=document.createElement("p");
+            var userId=document.createElement("p");
+
+            list.innerHTML=comment.body;
+            id.innerHTML=comment.id;
+            title.innerHTML=comment.title;
+            userId.innerHTML=comment.userId;
+            
+            title.appendChild(list);
+            id.appendChild(title);
+            userId.appendChild(id);
+            innerDiv.appendChild(userId)
+            contentIndex.appendChild(innerDiv);
+            app.appendChild(contentIndex);
+            //div.style.background = "black";
+            //document.getElementByClassName("myDiv").setAttribute("style","background-color:#abc; padding:10px; border-bottom: 1px solid #4241a7");
+          });
+          document.getElementById("app").setAttribute("style","background-color:#cda; color:red");
+        });
+      });
+    </script>
+  </body>
+</html>
